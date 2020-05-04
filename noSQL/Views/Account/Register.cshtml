@@ -1,0 +1,28 @@
+﻿@model noSQL.Models.AccountModel
+
+<h2>@ViewBag.Message</h2>
+
+<h2>Zarejestruj się</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="SubmitRegister" method="post">
+            <div>
+                <div>
+                    <label asp-for=Login>Login</label>
+                    <input asp-for=Login />
+                </div>
+                <div>
+                    <label asp-for=Password>Hasło</label>
+                    <input asp-for=Password />
+                </div>
+            </div>
+
+            <div>
+                <input type="submit" value="Zarejestruj" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
