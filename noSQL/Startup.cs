@@ -30,6 +30,16 @@ namespace noSQL
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddSession(options => {
+                options.Cookie.Name = "Test.Session";
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+            });
+
+            services.AddDistributedRedisCache(options =>
+            {
+                options.InstanceName = "Sample";
+                options.Configuration = "localhost";
+            });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -46,7 +56,7 @@ namespace noSQL
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
-
+            app.UseSession();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();

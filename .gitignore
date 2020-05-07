@@ -3,3 +3,10 @@
 ################################################################################
 
 /.vs/noSQL
+/noSQL/bin/Debug/netcoreapp2.1
+*.cache
+*.CopyComplete
+*.dll
+*.pdb
+*.cs
+/noSQL/obj
