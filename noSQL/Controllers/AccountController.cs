@@ -1,14 +1,17 @@
 ﻿using System;
+using System.Text;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using noSQL.Models;
 using noSQL.Common;
+using System.Web;
+using Microsoft.AspNetCore.Session;
 
 namespace noSQL.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         public IActionResult Index()
         {
@@ -21,9 +24,10 @@ namespace noSQL.Controllers
         }
         public void SubmitLogin(AccountModel model)
         {
-            if(ValidateUser(model.Login, model.Password))
+            redisSetKey("klucz", "wartosc123qwe");
+            if (ValidateUser(model.Login, model.Password))
             {
-                //User Validated
+                //User validated
             }
             else
             {

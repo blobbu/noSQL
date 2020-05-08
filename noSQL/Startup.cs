@@ -31,15 +31,9 @@ namespace noSQL
             });
 
             services.AddSession(options => {
-                options.Cookie.Name = "Test.Session";
-                options.IdleTimeout = TimeSpan.FromMinutes(30);
-            });
-
-            services.AddDistributedRedisCache(options =>
-            {
-                options.InstanceName = "Sample";
-                options.Configuration = "localhost";
-            });
+                 options.Cookie.Name = "Test.Session";
+                 options.IdleTimeout = TimeSpan.FromMinutes(30);
+             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -56,11 +50,12 @@ namespace noSQL
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
-            app.UseSession();
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
+            app.UseSession();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
