@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using noSQL.Filters;
+
 namespace noSQL
 {
     public class Startup
@@ -34,6 +36,11 @@ namespace noSQL
                  options.Cookie.Name = "Test.Session";
                  options.IdleTimeout = TimeSpan.FromMinutes(30);
                  options.Cookie.IsEssential = true;
+            });
+
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(new ViewBagAttribute());
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);

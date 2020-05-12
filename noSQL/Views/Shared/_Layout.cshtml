@@ -32,13 +32,15 @@
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="News">Aktualności</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="VideoSearch">Wyszukiwarka filmów</a></li>
+                    @if (ViewBag.UserName == "")
+                    {
                     <li><a asp-area="" asp-controller="Account" asp-action="Login">Zaloguj</a></li>
                     <li><a asp-area="" asp-controller="Account" asp-action="Register">Zarejestruj</a></li>
+                    }
                 </ul>
             </div>
         </div>
     </nav>
-
     <partial name="_CookieConsentPartial" />
 
     <div class="container body-content">
