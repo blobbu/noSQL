@@ -1,5 +1,9 @@
 ﻿@model noSQL.Models.AccountModel
 
+@if(ViewBag.Message != "")
+{
+    <h2 style="color:red">@ViewBag.Message</h2>
+}
 <h2>Zaloguj się</h2>
 
 <div class="row">

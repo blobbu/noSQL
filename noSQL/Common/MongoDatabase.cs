@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using noSQL.Helpers;
 
 namespace noSQL.Common
 {
@@ -45,13 +46,13 @@ namespace noSQL.Common
             var filter = builder.Eq("login", login) & builder.Eq("password", password);
             return filter;
         }
-        public ReturnInfo CreateNewUser(string login, string password)
+        public ReturnInfo CreateNewUser(string login, string password, UserRoles role)
         {
             if (getFilteredDocuments(getSimpleFilter("login", login)).Count != 0)
                 return new ReturnInfo(false, "User exist");
 
             List<BsonElement> userDetails = new List<BsonElement> {
-                    new BsonElement("login", login), new BsonElement("password", password) };
+                    new BsonElement("login", login), new BsonElement("password", password), new BsonElement("role", role) };
 
             var newUser = new BsonDocument(userDetails);
 
@@ -71,6 +72,23 @@ namespace noSQL.Common
             }
 
             return new ReturnInfo(true);
+        }
+
+        public int? GetUserRole(BsonDocument user)
+        {
+            BsonValue output;
+            bool result = user.TryGetValue("role", out output);
+            int? returnValue;
+            try
+            {
+                returnValue = output.AsInt32;
+            }
+            catch
+            {
+                returnValue = null;
+            }
+
+            return returnValue;
         }
     }
 }

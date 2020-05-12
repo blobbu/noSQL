@@ -26,14 +26,15 @@ namespace noSQL
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
+                options.CheckConsentNeeded = context => false;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
             services.AddSession(options => {
                  options.Cookie.Name = "Test.Session";
                  options.IdleTimeout = TimeSpan.FromMinutes(30);
-             });
+                 options.Cookie.IsEssential = true;
+            });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

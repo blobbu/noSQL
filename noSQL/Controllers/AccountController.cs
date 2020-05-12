@@ -8,6 +8,7 @@ using noSQL.Models;
 using noSQL.Common;
 using System.Web;
 using Microsoft.AspNetCore.Session;
+using noSQL.Helpers;
 
 namespace noSQL.Controllers
 {
@@ -22,16 +23,24 @@ namespace noSQL.Controllers
         {
             return View();
         }
-        public void SubmitLogin(AccountModel model)
+        public IActionResult SubmitLogin(AccountModel model)
         {
-            redisSetKey("klucz", "wartosc123qwe");
+            
             if (ValidateUser(model.Login, model.Password))
             {
-                //User validated
+                int sessionExpireSeconds = 30 * 60; //sesja wygasa po 30 minutach
+                UserRoles role = GetUserRole(model.Login);
+                string redisValue = model.Login + ";" + role;
+                redisSetKeyWithExpire(HttpContext.Session.Id, redisValue, sessionExpireSeconds);
+                byte[] tmp = Encoding.ASCII.GetBytes("x");
+                this.HttpContext.Session.Set("tmp", tmp);
+                ViewBag.Message = "Zalogowano pomyślnie";
+                return RedirectToAction("News", "Home");
             }
             else
             {
-                //Uset not validated
+                ViewBag.Message = "Nieprawidłowe dane!!!";
+                return View("Login");
             }
         }
 
@@ -44,7 +53,7 @@ namespace noSQL.Controllers
             MongoDatabase mongoDb = new MongoDatabase("mongodb://root:root@13.82.22.244:27017");
             mongoDb.setDatabase("noSQL");
             mongoDb.setCollection("users");
-            ReturnInfo result = mongoDb.CreateNewUser(model.Login, model.Password);
+            ReturnInfo result = mongoDb.CreateNewUser(model.Login, model.Password, UserRoles.User);
 
             if (result.Status)
             {
@@ -67,10 +76,26 @@ namespace noSQL.Controllers
             MongoDatabase mongoDb = new MongoDatabase("mongodb://root:root@13.82.22.244:27017");
             mongoDb.setDatabase("noSQL");
             mongoDb.setCollection("users");
-            var filter = mongoDb.getFilterForValidation(login, "anorhb433");
+            var filter = mongoDb.getFilterForValidation(login, password);
             var user = mongoDb.getFilteredDocuments(filter);
 
             return user.Count == 1;
         }
+
+        private UserRoles GetUserRole(string login)
+        {
+            MongoDatabase mongoDb = new MongoDatabase("mongodb://root:root@13.82.22.244:27017");
+            mongoDb.setDatabase("noSQL");
+            mongoDb.setCollection("users");
+            var filter = mongoDb.getSimpleFilter("login", login);
+            var user = mongoDb.getFilteredDocuments(filter);
+            var role = mongoDb.GetUserRole(user[0]);
+
+            if (role == 1) return UserRoles.User;
+            else if (role == 2) return UserRoles.Admin;
+            else return UserRoles.Guest;
+        }
+
+        
     }
 }

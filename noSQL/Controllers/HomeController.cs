@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using noSQL.Models;
 using noSQL.Common;
+using noSQL.Filters;
 
 namespace noSQL.Controllers
 {
@@ -21,9 +22,15 @@ namespace noSQL.Controllers
             return View();
         }
 
+        [Authorize]
         public IActionResult VideoSearch()
         {
-            new Elastic().EsClient();
+            //new Elastic().EsClient();
+            return View();
+        }
+
+        public IActionResult LayoutUserName()
+        {
             return View();
         }
     }
