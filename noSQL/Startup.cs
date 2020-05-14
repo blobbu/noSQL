@@ -41,6 +41,7 @@ namespace noSQL
             services.AddMvc(options =>
             {
                 options.Filters.Add(new ViewBagAttribute());
+                options.Filters.Add(new Logger());
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);

@@ -23,6 +23,13 @@ namespace noSQL.Controllers
         {
             return View();
         }
+
+        public IActionResult LogOut()
+        {
+            this.redisDeleteKey(this.HttpContext.Session.Id);
+            return RedirectToAction("Index", "Home");
+        }
+          
         public IActionResult SubmitLogin(AccountModel model)
         {
             

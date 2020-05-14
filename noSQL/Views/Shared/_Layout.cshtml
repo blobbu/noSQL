@@ -34,8 +34,12 @@
                     <li><a asp-area="" asp-controller="Home" asp-action="VideoSearch">Wyszukiwarka filmów</a></li>
                     @if (ViewBag.UserName == "")
                     {
-                    <li><a asp-area="" asp-controller="Account" asp-action="Login">Zaloguj</a></li>
-                    <li><a asp-area="" asp-controller="Account" asp-action="Register">Zarejestruj</a></li>
+                        <li><a asp-area="" asp-controller="Account" asp-action="Login">Zaloguj</a></li>
+                        <li><a asp-area="" asp-controller="Account" asp-action="Register">Zarejestruj</a></li>
+                    }
+                    else
+                    {
+                        <li><a asp-area="" asp-controller="Account" asp-action="LogOut">Wyloguj</a></li>
                     }
                 </ul>
             </div>

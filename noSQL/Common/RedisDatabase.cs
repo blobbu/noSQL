@@ -39,5 +39,11 @@ namespace noSQL.Common
             return conn.StringGet(key);
         }
 
+        public bool DeleteKey(string key, int dbNumber = 1)
+        {
+            IDatabase conn = redisConn.GetDatabase(dbNumber);
+            return conn.KeyDelete(key);
+        }
+
     }
 }

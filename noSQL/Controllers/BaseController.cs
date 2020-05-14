@@ -27,6 +27,10 @@ namespace noSQL.Controllers
         {
             return redis.SetKeyWithExpire(value, key, expireTime, dbNumber);
         }
+        protected bool redisDeleteKey(string key, int dbNumer = 1)
+        {
+            return redis.DeleteKey(key, dbNumer);
+        }
         private string redisGetValue(string key, int dbNumber = 1)
         {
             return redis.GetValue(key);
