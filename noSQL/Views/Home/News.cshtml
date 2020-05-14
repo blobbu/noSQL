@@ -1,1 +1,43 @@
-﻿STRONA Z AKUTALNOSCIAMI
+﻿@model noSQL.Models.NewsModel
+STRONA Z AKUTALNOSCIAMI
+<br /><br />
+<style>
+
+    table, th, td {
+        border: 1px solid black;
+    }
+    td {
+        text-align: center;
+    }
+</style>
+
+<div>
+    <table>
+        <tr>
+            <td>Id</td>
+            <td>Title</td>
+            <td>Date</td>
+            <td>Genere</td>
+            <td>Runtime</td>
+            <td>Rating</td>
+            <td>Summary</td>
+            <td>PathImg</td>
+            <td>Price</td>
+        </tr>
+        @foreach (var movie in Model.MoviesList)
+        {
+            <tr>
+                <td> @movie.Id </td>
+                <td> @movie.Title </td>
+                <td> @movie.Date </td>
+                <td> @movie.Genere </td>
+                <td> @movie.Runtime </td>
+                <td> @movie.Rating </td>
+                <td> @movie.Summary </td>
+                <td> @movie.PathImg </td>
+                <td> @movie.Price </td>
+            </tr>
+        }
+    </table>
+
+</div>
