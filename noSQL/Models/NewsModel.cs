@@ -14,7 +14,7 @@ namespace noSQL.Models
         public string Runtime { get; set; }
         public string Rating { get; set;}
         public string Summary { get; set; }
-        public string PathImg { get; set; }
+        public string RawImg { get; set; }
         public string Price { get; set; }
     }
     public class NewsModel

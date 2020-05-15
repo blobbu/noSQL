@@ -14,8 +14,7 @@ namespace noSQL.Controllers
     {
         public IActionResult Index()
         {
-            return RedirectToAction("News", "Home");
-            //return View();
+            return View();
         }
 
         public IActionResult News()
@@ -39,7 +38,7 @@ namespace noSQL.Controllers
         {
             NewsModel model = new NewsModel { MoviesList = new List<Movies_ttl>() };
             var cass = new CassandraDatabase();
-            Cassandra.RowSet movies = cass.getAllDataFromTable("movies_ttl");
+            Cassandra.RowSet movies = cass.getAllDataFromTable("movies_ttl2");
             
             foreach(var movie in movies)
             {
@@ -52,7 +51,7 @@ namespace noSQL.Controllers
                     Runtime = movie["runtime"].ToString(),
                     Rating = movie["rating"].ToString(),
                     Summary = movie["summary"].ToString(),
-                    PathImg = movie["path_img"].ToString(),
+                    RawImg = movie["img_base64"].ToString(),
                     Price = movie["price"].ToString()
                 };
                 model.MoviesList.Add(tmpMovie);

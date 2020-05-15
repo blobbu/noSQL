@@ -26,17 +26,17 @@ STRONA Z AKUTALNOSCIAMI
         </tr>
         @foreach (var movie in Model.MoviesList)
         {
-            <tr>
-                <td> @movie.Id </td>
-                <td> @movie.Title </td>
-                <td> @movie.Date </td>
-                <td> @movie.Genere </td>
-                <td> @movie.Runtime </td>
-                <td> @movie.Rating </td>
-                <td> @movie.Summary </td>
-                <td> @movie.PathImg </td>
-                <td> @movie.Price </td>
-            </tr>
+    <tr>
+        <td> @movie.Id </td>
+        <td> @movie.Title </td>
+        <td> @movie.Date </td>
+        <td> @movie.Genere </td>
+        <td> @movie.Runtime </td>
+        <td> @movie.Rating </td>
+        <td> @movie.Summary </td>
+        <td><img src="data:image/png;base64, @movie.RawImg" /></td>
+        <td> @movie.Price </td>
+    </tr>
         }
     </table>
 
