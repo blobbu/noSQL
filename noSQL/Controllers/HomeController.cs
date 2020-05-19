@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using noSQL.Models;
 using noSQL.Common;
 using noSQL.Filters;
+using noSQL.Helpers;
 
 namespace noSQL.Controllers
 {
@@ -23,11 +24,14 @@ namespace noSQL.Controllers
             return View(model);
         }
 
-        [Authorize]
-        public IActionResult VideoSearch()
+        public IActionResult VideoSearch(VideoSearchModel model)
         {
-            //new Elastic().EsClient();
-            return View();
+            if (model != null)
+            {
+                model.Movies = new HttpRequestHelper().GetMovies(model.SearchByTitle);
+                model.SearchByTitle = null;
+            }
+            return View(model);
         }
 
         public IActionResult LayoutUserName()

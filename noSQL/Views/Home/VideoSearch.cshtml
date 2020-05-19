@@ -1,1 +1,58 @@
-﻿Wyszukiwarka filmow
+﻿@model noSQL.Models.VideoSearchModel
+
+<br /><br />
+      <style>
+          table, th, td {
+              border: 1px solid black;
+          }
+
+          td {
+              text-align: center;
+          }
+      </style>
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="VideoSearch" method="post">
+                <div>
+                    <label asp-for=SearchByTitle>Tytuł</label>
+                    <input asp-for=SearchByTitle />
+                </div>
+
+                <div>
+                    <input type="submit" value="Szukaj" />
+                </div>
+            </form>
+        </div>
+        <br />
+    </div>
+
+    @if (Model.Movies.Count > 0)
+    {
+    <div>
+        <table>
+            <tr>
+                <td>MovieId</td>
+                <td>Title</td>
+                <td>MPAA_Rating</td>
+                <td>Genre</td>
+                <td>Release_Date</td>
+                <td>Rating</td>
+                <td>Summary</td>
+                <td>Runtime</td>
+            </tr>
+            @foreach (var movie in Model.Movies)
+            {
+                <tr>
+                    <td> @movie.MovieId </td>
+                    <td> @movie.Title </td>
+                    <td> @movie.MPAA_Rating </td>
+                    <td> @movie.Genre </td>
+                    <td> @movie.Release_Date </td>
+                    <td> @movie.Rating </td>
+                    <td> @movie.Summary </td>
+                    <td> @movie.Runtime </td>
+                </tr>
+            }
+        </table>
+    </div>
+    }
