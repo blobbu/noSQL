@@ -1,43 +1,47 @@
 ﻿@model noSQL.Models.NewsModel
-STRONA Z AKUTALNOSCIAMI
-<br /><br />
-<style>
 
-    table, th, td {
-        border: 1px solid black;
-    }
-    td {
-        text-align: center;
-    }
-</style>
 
-<div>
-    <table>
-        <tr>
-            <td>Id</td>
-            <td>Title</td>
-            <td>Date</td>
-            <td>Genere</td>
-            <td>Runtime</td>
-            <td>Rating</td>
-            <td>Summary</td>
-            <td>PathImg</td>
-            <td>Price</td>
-        </tr>
-        @foreach (var movie in Model.MoviesList)
-        {
-    <tr>
-        <td> @movie.Id </td>
-        <td> @movie.Title </td>
-        <td> @movie.Date </td>
-        <td> @movie.Genere </td>
-        <td> @movie.Runtime </td>
-        <td> @movie.Rating </td>
-        <td> @movie.Summary </td>
-        <td><img src="data:image/png;base64, @movie.RawImg" /></td>
-        <td> @movie.Price </td>
-    </tr>
-        }
-    </table>
 
+<div class='row'>
+    <div class="col-md">
+        <div class='card card-body'>
+            <h5>Najnowsze filmy</h5>
+
+        </div>
+        <div class="card card-body">
+            <table class="table table-striped">
+                <tr>
+                    <th></th>
+                    <th>Title</th>
+                    <th>Release date</th>
+                    <th>Genere</th>
+                    <th>Runtime</th>
+                    <th>Rating</th>
+                    <th>Summary</th>
+                    <th>Price</th>
+
+
+                </tr>
+                @foreach (var movie in Model.MoviesList)
+                {
+                    <tr>
+                        <td><img src="data:image/png;base64, @movie.RawImg" /></td>
+                        <td> @movie.Title </td>
+                        <td> @movie.Date </td>
+                        <td> @movie.Genere </td>
+                        <td> @movie.Runtime </td>
+                        <td> @movie.Rating </td>
+                        <td> @movie.Summary </td>
+                        <td> @movie.Price </td>
+
+
+                    </tr>
+                }
+
+
+            </table>
+
+        </div>
+    </div>
 </div>
+

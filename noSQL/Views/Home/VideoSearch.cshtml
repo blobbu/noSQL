@@ -1,49 +1,52 @@
 ﻿@model noSQL.Models.VideoSearchModel
 
-<br /><br />
-      <style>
-          table, th, td {
-              border: 1px solid black;
-          }
+<div class="container-fluid">
 
-          td {
-              text-align: center;
-          }
-      </style>
-    <div class="row">
-        <div class="col-md-4">
-            <form asp-action="VideoSearch" method="post">
-                <div>
-                    <label asp-for=SearchByTitle>Tytuł</label>
-                    <input asp-for=SearchByTitle />
-                </div>
+    <div class='row'>
+        <div class="col-md-12">
+            <div class='card card-body'>
 
-                <div>
-                    <input type="submit" value="Szukaj" />
-                </div>
-            </form>
+
+            </div>
+            <div class="card card-body">
+
+                <label>  </label>
+                <form class="form-inline" asp-action="VideoSearch" method="post">
+                    <i class="fas fa-search" aria-hidden="true"></i>
+                    <label></label>
+                    <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Wpisz tytuł filmu"
+                           aria-label="Szukaj" asp-for=SearchByTitle />
+                    <label>  </label>
+
+                    <div>
+                        <button type="submit" class="btn btn-secondary"  mr-1>Szukaj</button>
+
+                    </div>
+                </form>
+            </div>
+            <br />
         </div>
-        <br />
-    </div>
 
-    @if (Model.Movies.Count > 0)
-    {
-    <div>
-        <table>
-            <tr>
-                <td>MovieId</td>
-                <td>Title</td>
-                <td>MPAA_Rating</td>
-                <td>Genre</td>
-                <td>Release_Date</td>
-                <td>Rating</td>
-                <td>Summary</td>
-                <td>Runtime</td>
-            </tr>
-            @foreach (var movie in Model.Movies)
-            {
+        @if (Model.Movies.Count > 0)
+        {
+            <div>
+                <table class="table table-striped">
+                    <tr>
+                      
+                        <td>Title</td>
+                        <td>MPAA_Rating</td>
+                        <td>Genre</td>
+                        <td>Release_Date</td>
+                        <td>Rating</td>
+                        <td>Summary</td>
+                        <td>Runtime</td>
+                        <td>Price</td>
+                        <td>     </td>
+                    </tr>
+                    @foreach (var movie in Model.Movies)
+                    {
                 <tr>
-                    <td> @movie.MovieId </td>
+              
                     <td> @movie.Title </td>
                     <td> @movie.MPAA_Rating </td>
                     <td> @movie.Genre </td>
@@ -51,8 +54,28 @@
                     <td> @movie.Rating </td>
                     <td> @movie.Summary </td>
                     <td> @movie.Runtime </td>
+                    <td> @movie.Runtime </td>
+                     <td>
+                        <form class="form-inline" asp-action="VideoSearch" method="post">
+                      
+                            <div>
+                                <button type="submit" class="btn btn-secondary">Kup</button>
+
+                            </div>
+                        </form>
+
+
+                      </td>
                 </tr>
-            }
-        </table>
+
+                    }
+                </table>
+            </div>
+        }
+
+
     </div>
-    }
+
+
+
+</div>
