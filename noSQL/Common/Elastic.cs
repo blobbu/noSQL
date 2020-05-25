@@ -13,7 +13,7 @@ namespace noSQL.Common
         {
             var nodes = new Uri[]
             {
-                new Uri("http://13.82.22.244:5601/"),
+                new Uri("http://192.168.8.101:5601/"),
             };
 
             var connectionPool = new StaticConnectionPool(nodes);

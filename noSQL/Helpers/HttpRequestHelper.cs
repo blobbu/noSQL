@@ -15,7 +15,7 @@ namespace noSQL.Helpers
     {
         private string SendRequest(string title)
         {
-            var url = "http://13.82.22.244:9200/movie/_search";
+            var url = "http://192.168.8.101:9200/movie/_search";
             var jsonData = "{ " +
                 "\"query\":{" +
                     "\"match\": {" +

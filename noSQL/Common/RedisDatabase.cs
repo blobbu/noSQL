@@ -13,7 +13,7 @@ namespace noSQL.Common
         {
             ConfigurationOptions option = new ConfigurationOptions
             {
-                EndPoints = { "13.82.22.244:6379" },
+                EndPoints = { "192.168.8.101:6379" },
                 Password = "redis"
             };
 

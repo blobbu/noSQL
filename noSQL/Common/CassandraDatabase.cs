@@ -12,7 +12,7 @@ namespace noSQL.Common
         public CassandraDatabase()
         {
             Clust = Cluster.Builder()
-                         .AddContactPoints("13.82.22.244")
+                         .AddContactPoints("192.168.8.101")
                          .WithPort(9042)
                          .WithLoadBalancingPolicy(new DCAwareRoundRobinPolicy("datacenter1"))
                          .WithAuthProvider(new PlainTextAuthProvider("cassandra", "cassandra"))

@@ -10,7 +10,7 @@ namespace noSQL.Helpers
     {
         public bool sendStringToFile(string filePath, string stringData)
         {
-            using (var client = new SshClient("13.82.22.244", "linux", "qscvb1234ZKLIFG"))
+            using (var client = new SshClient("192.168.8.101", "bb", "qazwsx"))
             {
                 client.Connect();
                 client.RunCommand("touch " + filePath);

@@ -33,7 +33,7 @@ namespace noSQL.Filters
                 Time = DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToLongTimeString()
             };
             string jsonResult = JsonConvert.SerializeObject(simpleLog);
-            new SshHelper().sendStringToFile("/home/linux/logs/simpleLog.log", jsonResult);
+            new SshHelper().sendStringToFile("/home/bb/logs/simpleLog.log", jsonResult);
         }
     }
 }
