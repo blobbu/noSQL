@@ -46,7 +46,7 @@
                     {
                 <tr>
               
-                    <td> @movie.Title </td>
+                    <td>@Html.ActionLink(@movie.Title , "AddToCart", "Home", new { id = movie.MovieId }, null)</td>
                     <td> @movie.MPAA_Rating </td>
                     <td> @movie.Genre </td>
                     <td> @movie.Release_Date </td>
