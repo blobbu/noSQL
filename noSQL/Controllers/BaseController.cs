@@ -19,19 +19,19 @@ namespace noSQL.Controllers
             }
         }
 
-        protected bool redisSetKey(string value, string key, int dbNumber = 1)
+        protected bool redisSetKey(string key, string value, int dbNumber = 1)
         {
-            return redis.SetKey(value, key, dbNumber);
+            return redis.SetKey(key, value, dbNumber);
         }
-        protected bool redisSetKeyWithExpire(string value, string key, int expireTime, int dbNumber = 1)
+        protected bool redisSetKeyWithExpire(string key, string value, int expireTime, int dbNumber = 1)
         {
-            return redis.SetKeyWithExpire(value, key, expireTime, dbNumber);
+            return redis.SetKeyWithExpire(key, value, expireTime, dbNumber);
         }
         protected bool redisDeleteKey(string key, int dbNumer = 1)
         {
             return redis.DeleteKey(key, dbNumer);
         }
-        private string redisGetValue(string key, int dbNumber = 1)
+        protected string redisGetValue(string key, int dbNumber = 1)
         {
             return redis.GetValue(key);
         }

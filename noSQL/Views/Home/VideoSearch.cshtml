@@ -41,7 +41,6 @@
                         <td>Summary</td>
                         <td>Runtime</td>
                         <td>Price</td>
-                        <td>     </td>
                     </tr>
                     @foreach (var movie in Model.Movies)
                     {
@@ -54,7 +53,7 @@
                     <td> @movie.Rating </td>
                     <td> @movie.Summary </td>
                     <td> @movie.Runtime </td>
-                    <td> @movie.Runtime </td>
+                    <td> @movie.Price </td>
                      <td>
                         <form class="form-inline" asp-action="VideoSearch" method="post">
                       

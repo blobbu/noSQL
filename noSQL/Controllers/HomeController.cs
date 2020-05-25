@@ -18,6 +18,30 @@ namespace noSQL.Controllers
             return View();
         }
 
+        public IActionResult Cart()
+        {
+            CartModel model = new CartModel();
+            model.Movies = new List<MovieCart>();
+
+            string actualCart = redisGetValue(this.HttpContext.Session.Id, 2);
+            var moviesId = actualCart.Split(";");
+
+            foreach (var movieId in moviesId)
+            {
+                MovieCart movie = new HttpRequestHelper().getMovieToCart(movieId);
+                model.Movies.Add(movie);
+            }
+
+            return View(model);
+        }
+
+        public void AddToCart(int id)
+        {
+            string actualCart = redisGetValue(this.HttpContext.Session.Id,2);
+            actualCart = actualCart + ";" + id;
+            redisSetKey(this.HttpContext.Session.Id, actualCart, 2);
+        }
+
         public IActionResult News()
         {
             var model = getMoviesToNews();

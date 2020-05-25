@@ -13,6 +13,14 @@ namespace noSQL.Helpers
 {
     public class HttpRequestHelper
     {
+
+        public MovieCart getMovieToCart(string id)
+        {
+            var movie = SendRequestForCart(id);
+            return movie;
+        }
+
+
         private string SendRequest(string title)
         {
             var url = "http://192.168.8.101:9200/movie/_search";
@@ -34,6 +42,37 @@ namespace noSQL.Helpers
                 return jsonResponse;
             }
         }
+
+
+        private MovieCart SendRequestForCart(string id)
+        {   
+            var url = "http://192.168.8.101:9200/movie/_search";
+            var jsonData = "{ " +
+                "\"query\":{" +
+                    "\"match\": {" +
+                        "\"MovieId\": " + id  +
+                        "}" +
+                    "}" +
+                "}";
+
+            using (var client = new WebClient())
+            {
+                client.Headers.Add("content-type", "application/json");
+                client.Credentials = new NetworkCredential("elastic", "phrsVCKCJIvLuDR87GDs");
+                var jsonResponse = client.UploadString(url, jsonData);
+
+                var parsedObject = JObject.Parse(jsonResponse);
+                var tmp = parsedObject["hits"]["hits"];
+
+                string jsonMovie = tmp["_source"].ToString();
+
+                MovieCart movie = JsonConvert.DeserializeObject<MovieCart>(jsonMovie);
+
+                return movie;
+            }
+        }
+
+
 
         public List<Movie> GetMovies(string title)
         {

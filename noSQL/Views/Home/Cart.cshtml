@@ -1,0 +1,64 @@
+﻿@model noSQL.Models.CartModel
+
+<div class="container-fluid">
+
+    <div class='row'>
+
+
+        @if (Model.Movies.Count > 0)
+        {
+            <div>
+                <table class="table table-striped">
+                    <tr>
+
+                        <td>Title</td>
+                        <td>MPAA_Rating</td>
+                        <td>Genre</td>
+                        <td>Release_Date</td>
+                        <td>Rating</td>
+                        <td>Summary</td>
+                        <td>Runtime</td>
+                        <td>Price</td>
+                    </tr>
+                    @foreach (var movie in Model.Movies)
+                    {
+                        <tr>
+
+                            <td> @movie.Title </td>
+                            <td> @movie.MPAA_Rating </td>
+                            <td> @movie.Genre </td>
+                            <td> @movie.Release_Date </td>
+                            <td> @movie.Rating </td>
+                            <td> @movie.Summary </td>
+                            <td> @movie.Runtime </td>
+                            <td> @movie.Price </td>
+                            <td>
+                                <form class="form-inline" asp-action="VideoSearch" method="post">
+
+                                    <div>
+                                        <button type="submit" class="btn btn-secondary">Kup</button>
+
+                                    </div>
+                                </form>
+
+
+                            </td>
+                        </tr>
+
+                    }
+                </table>
+            </div>
+        }
+        else
+        {
+            <div>
+                KOSZYK JEST PUSTY!!!
+            </div>
+        }
+
+
+    </div>
+
+
+
+</div>
