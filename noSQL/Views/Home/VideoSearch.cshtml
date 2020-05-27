@@ -29,24 +29,25 @@
 
         @if (Model.Movies.Count > 0)
         {
-            <div>
-                <table class="table table-striped">
-                    <tr>
-                      
-                        <td>Title</td>
-                        <td>MPAA_Rating</td>
-                        <td>Genre</td>
-                        <td>Release_Date</td>
-                        <td>Rating</td>
-                        <td>Summary</td>
-                        <td>Runtime</td>
-                        <td>Price</td>
-                    </tr>
-                    @foreach (var movie in Model.Movies)
-                    {
+    <div>
+        <table class="table table-striped">
+            <tr>
+
+                <td>Title</td>
+                <td>MPAA_Rating</td>
+                <td>Genre</td>
+                <td>Release_Date</td>
+                <td>Rating</td>
+                <td>Summary</td>
+                <td>Runtime</td>
+                <td>Price</td>
+                <td>Action</td>
+            </tr>
+            @foreach (var movie in Model.Movies)
+            {
                 <tr>
-              
-                    <td>@Html.ActionLink(@movie.Title , "AddToCart", "Home", new { id = movie.MovieId }, null)</td>
+
+                    <td>@movie.Title</td>
                     <td> @movie.MPAA_Rating </td>
                     <td> @movie.Genre </td>
                     <td> @movie.Release_Date </td>
@@ -54,22 +55,19 @@
                     <td> @movie.Summary </td>
                     <td> @movie.Runtime </td>
                     <td> @movie.Price </td>
-                     <td>
-                        <form class="form-inline" asp-action="VideoSearch" method="post">
-                      
-                            <div>
-                                <button type="submit" class="btn btn-secondary">Kup</button>
+                    <td>
+                       
 
-                            </div>
-                        </form>
+            
+                                <a asp-controller="Home" asp-action="AddToCart" asp-route-id="@movie.MovieId"> Dodaj do koszyka</a>
+          
 
-
-                      </td>
+                    </td>
                 </tr>
 
-                    }
-                </table>
-            </div>
+            }
+        </table>
+    </div>
         }
 
 

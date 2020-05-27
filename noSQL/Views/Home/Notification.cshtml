@@ -1,0 +1,31 @@
+﻿@model noSQL.Models.NotificationModel
+<h2>Powiadomienia</h2>
+
+@if (Model != null && Model.Notifications.Count > 0)
+{
+    <div>
+        <table class="table table-striped">
+            <tr>
+
+                <td>User</td>
+                <td>Message</td>
+                <td>Time</td>
+            </tr>
+            @foreach (var notification in Model.Notifications)
+            {
+                <tr>
+
+                    <td> @notification.User </td>
+                    <td> @notification.Message </td>
+                    <td> @notification.Time </td>
+                    <td></td>
+                </tr>
+
+            }
+        </table>
+    </div>
+}
+else
+{
+    <h2>BRAK POWIADOMIEŃ</h2>
+}

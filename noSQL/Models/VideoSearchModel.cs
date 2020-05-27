@@ -9,6 +9,7 @@ namespace noSQL.Models
     {
         public string SearchByTitle { get; set; }
         public List <Movie> Movies { get; set; }
+        public string MovieId { get; set; }
     }
     public class Movie
     {

@@ -57,7 +57,7 @@ namespace noSQL.Controllers
         }
         public IActionResult SubmitRegister(AccountModel model)
         {
-            MongoDatabase mongoDb = new MongoDatabase("mongodb://root:root@13.82.22.244:27017");
+            MongoDatabase mongoDb = new MongoDatabase("mongodb://root:root@192.168.8.101:27017");
             mongoDb.setDatabase("noSQL");
             mongoDb.setCollection("users");
             ReturnInfo result = mongoDb.CreateNewUser(model.Login, model.Password, UserRoles.User);
@@ -80,7 +80,7 @@ namespace noSQL.Controllers
 
         private bool ValidateUser(string login, string password)
         {
-            MongoDatabase mongoDb = new MongoDatabase("mongodb://root:root@13.82.22.244:27017");
+            MongoDatabase mongoDb = new MongoDatabase("mongodb://root:root@192.168.8.101:27017");
             mongoDb.setDatabase("noSQL");
             mongoDb.setCollection("users");
             var filter = mongoDb.getFilterForValidation(login, password);
@@ -91,7 +91,7 @@ namespace noSQL.Controllers
 
         private UserRoles GetUserRole(string login)
         {
-            MongoDatabase mongoDb = new MongoDatabase("mongodb://root:root@13.82.22.244:27017");
+            MongoDatabase mongoDb = new MongoDatabase("mongodb://root:root@192.168.8.101:27017");
             mongoDb.setDatabase("noSQL");
             mongoDb.setCollection("users");
             var filter = mongoDb.getSimpleFilter("login", login);

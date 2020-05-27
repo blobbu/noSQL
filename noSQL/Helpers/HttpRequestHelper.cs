@@ -37,7 +37,7 @@ namespace noSQL.Helpers
             using (var client = new WebClient())
             {
                 client.Headers.Add("content-type", "application/json");
-                client.Credentials = new NetworkCredential("elastic", "phrsVCKCJIvLuDR87GDs");
+                client.Credentials = new NetworkCredential("", "");
                 var jsonResponse = client.UploadString(url, jsonData);
                 return jsonResponse;
             }
@@ -50,7 +50,7 @@ namespace noSQL.Helpers
             var jsonData = "{ " +
                 "\"query\":{" +
                     "\"match\": {" +
-                        "\"MovieId\": " + id  +
+                        "\"MovieID\": " + id  +
                         "}" +
                     "}" +
                 "}";
@@ -58,13 +58,13 @@ namespace noSQL.Helpers
             using (var client = new WebClient())
             {
                 client.Headers.Add("content-type", "application/json");
-                client.Credentials = new NetworkCredential("elastic", "phrsVCKCJIvLuDR87GDs");
+                client.Credentials = new NetworkCredential("", "");
                 var jsonResponse = client.UploadString(url, jsonData);
 
                 var parsedObject = JObject.Parse(jsonResponse);
                 var tmp = parsedObject["hits"]["hits"];
 
-                string jsonMovie = tmp["_source"].ToString();
+                string jsonMovie = tmp[0]["_source"].ToString();
 
                 MovieCart movie = JsonConvert.DeserializeObject<MovieCart>(jsonMovie);
 

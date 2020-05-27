@@ -90,5 +90,25 @@ namespace noSQL.Common
 
             return returnValue;
         }
+        public void AddOrder(string userName, string totalPrice, string[] movies)
+        {
+            List<BsonElement> orderDetails = new List<BsonElement>();
+            var tmp = new BsonElement("userName", userName);
+            orderDetails.Add(tmp);
+            tmp = new BsonElement("totalPrice", totalPrice);
+            orderDetails.Add(tmp);
+            int counter = 1;
+            foreach (var movie in movies)
+            {
+                tmp = new BsonElement("movie_" + counter, movie);
+
+                orderDetails.Add(tmp);
+                counter++;
+
+            }
+            
+            var order = new BsonDocument(orderDetails);
+            collection.InsertOne(order);
+        }
     }
 }

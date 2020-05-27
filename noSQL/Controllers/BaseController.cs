@@ -33,7 +33,7 @@ namespace noSQL.Controllers
         }
         protected string redisGetValue(string key, int dbNumber = 1)
         {
-            return redis.GetValue(key);
+            return redis.GetValue(key,dbNumber);
         }
         private CurrentUser getCurrentUser()
         {
@@ -62,5 +62,7 @@ namespace noSQL.Controllers
             else
                 return false;
         }
+
+     
     }
 }

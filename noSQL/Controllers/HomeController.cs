@@ -35,11 +35,16 @@ namespace noSQL.Controllers
             return View(model);
         }
 
-        public void AddToCart(int id)
+        public IActionResult AddToCart( int id)
         {
             string actualCart = redisGetValue(this.HttpContext.Session.Id,2);
-            actualCart = actualCart + ";" + id;
-            redisSetKey(this.HttpContext.Session.Id, actualCart, 2);
+
+            if (actualCart is null)
+                actualCart =  id.ToString();
+            else      
+                actualCart = actualCart + ";" + id;
+            redisSetKeyWithExpire(this.HttpContext.Session.Id, actualCart, 30*60, 2);
+            return RedirectToAction("Cart", "Home");
         }
 
         public IActionResult News()
@@ -86,5 +91,96 @@ namespace noSQL.Controllers
             }
             return model;
         }
+        public IActionResult SubmitCart(CartModel model)
+        {
+            CartModel oldmodel = new CartModel();
+            oldmodel.Movies = new List<MovieCart>();
+
+            string actualCart = redisGetValue(this.HttpContext.Session.Id, 2);
+            var moviesId = actualCart.Split(";");
+
+            foreach (var movieId in moviesId)
+            {
+                MovieCart movie = new HttpRequestHelper().getMovieToCart(movieId);
+                oldmodel.Movies.Add(movie);
+            }
+            model = oldmodel;
+
+            MongoDatabase mongoDb = new MongoDatabase("mongodb://root:root@192.168.8.101:27017");
+            mongoDb.setDatabase("noSQL");
+            mongoDb.setCollection("order");
+            double totalPrice = 0;
+            List<string> movies = new List<string>();
+            string user = this.CurrentUser.Name;
+
+            foreach (var movie in model.Movies)
+            {
+                movies.Add(movie.Title);
+                try
+                {
+                    totalPrice += Convert.ToDouble(movie.Price);
+                }
+                catch
+                {
+                    continue;
+                }
+            }
+            mongoDb.AddOrder(user, totalPrice.ToString(), movies.ToArray());
+            CassandraNotification();
+            return View("Index");
+        }
+        public void CassandraNotification()
+        {
+            CartModel model = new CartModel();
+            model.Movies = new List<MovieCart>();
+
+            string actualCart = redisGetValue(this.HttpContext.Session.Id, 2);
+            var moviesId = actualCart.Split(";");
+
+            foreach (var movieId in moviesId)
+            {
+                MovieCart movie = new HttpRequestHelper().getMovieToCart(movieId);
+                model.Movies.Add(movie);
+            }
+
+            double totalPrice = 0.0;
+            foreach (var movie in model.Movies)
+            {
+                try
+                {
+                    totalPrice += Convert.ToDouble(movie.Price);
+                }
+                catch
+                {
+                    continue;
+                }
+            }
+
+            var cass = new CassandraDatabase();
+            cass.insertNotification(this.CurrentUser.Name, totalPrice.ToString());
+        }
+        public IActionResult Notification()
+        {
+            NotificationModel model = new NotificationModel();
+            model.Notifications = new List<Notification>();
+            var cass = new CassandraDatabase();
+            string condition = "where user_login = " + this.CurrentUser.Name;
+            Cassandra.RowSet notifications = cass.getAllDataFromTableWithCondition("notification", condition);
+
+            foreach (var notification in notifications)
+            {
+                Notification tmpNotification = new Notification
+                {
+                    User = notification["user_login"].ToString(),
+                    Time = notification["added_time"].ToString(),
+                    Message = notification["message"].ToString(),
+
+                };
+                model.Notifications.Add(tmpNotification);
+            }
+
+            return View(model);
+        }
     }
+    
 }
