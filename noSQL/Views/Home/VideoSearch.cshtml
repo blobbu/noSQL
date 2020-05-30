@@ -16,10 +16,13 @@
                     <label></label>
                     <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Wpisz tytuł filmu"
                            aria-label="Szukaj" asp-for=SearchByTitle />
+
+                    <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Wpisz ocenę filmu"
+                           aria-label="Szukaj" asp-for=SearchByRating />
                     <label>  </label>
 
                     <div>
-                        <button type="submit" class="btn btn-secondary"  mr-1>Szukaj</button>
+                        <button type="submit" class="btn btn-secondary" mr-1>Szukaj</button>
 
                     </div>
                 </form>
@@ -27,7 +30,7 @@
             <br />
         </div>
 
-        @if (Model.Movies.Count > 0)
+        @if (Model != null && Model.Movies.Count > 0)
         {
     <div>
         <table class="table table-striped">

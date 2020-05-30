@@ -57,9 +57,21 @@ namespace noSQL.Controllers
         {
             if (model != null)
             {
-                model.Movies = new HttpRequestHelper().GetMovies(model.SearchByTitle);
-                model.SearchByTitle = null;
+                if (model.SearchByTitle != null)
+                {
+                    model.Movies = new HttpRequestHelper().GetMovies(model.SearchByTitle);
+                    model.SearchByTitle = null;
+                    model.SearchByRating = null;
+                }
+                else if (model.SearchByRating != null)
+                {
+                    model.Movies = new HttpRequestHelper().GetFilesByRaiting(model.SearchByRating);
+                    model.SearchByTitle = null;
+                    model.SearchByRating = null;
+                }
             }
+            if (model.Movies == null) model.Movies = new List<Movie>();
+            
             return View(model);
         }
 
@@ -127,7 +139,8 @@ namespace noSQL.Controllers
             }
             mongoDb.AddOrder(user, totalPrice.ToString(), movies.ToArray());
             CassandraNotification();
-            return View("Index");
+            redisDeleteKey(this.HttpContext.Session.Id, 2);
+            return View("VideoSearch");
         }
         public void CassandraNotification()
         {
@@ -164,7 +177,7 @@ namespace noSQL.Controllers
             NotificationModel model = new NotificationModel();
             model.Notifications = new List<Notification>();
             var cass = new CassandraDatabase();
-            string condition = "where user_login = " + this.CurrentUser.Name;
+            string condition = "where user_login = " + "'" + this.CurrentUser.Name + "'";
             Cassandra.RowSet notifications = cass.getAllDataFromTableWithCondition("notification", condition);
 
             foreach (var notification in notifications)
@@ -172,7 +185,7 @@ namespace noSQL.Controllers
                 Notification tmpNotification = new Notification
                 {
                     User = notification["user_login"].ToString(),
-                    Time = notification["added_time"].ToString(),
+                    Time = notification["added_time"].ToString().Split("+")[0],
                     Message = notification["message"].ToString(),
 
                 };

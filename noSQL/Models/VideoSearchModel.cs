@@ -8,6 +8,8 @@ namespace noSQL.Models
     public class VideoSearchModel
     {
         public string SearchByTitle { get; set; }
+        public string SearchByRating { get; set; }
+
         public List <Movie> Movies { get; set; }
         public string MovieId { get; set; }
     }

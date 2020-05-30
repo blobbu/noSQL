@@ -30,7 +30,7 @@ namespace noSQL.Common
             var session = Clust.Connect("test_cassandra");
             var nazwa = Clust.Metadata.ClusterName;
             var notification = "Dokonano zakupu. Całkowity koszt zamówienia: " + price;
-            string values = "'" + user + "', " + "'" + notification + "', now()";
+            string values = "'" + user + "', " + "'" + notification + "', toUnixTimestamp(now())";
             var rs = session.Execute("INSERT INTO notification(user_login, message, added_time) VALUES(" + values + ");");
         }
         public RowSet getAllDataFromTableWithCondition(string tableName, string conditions)

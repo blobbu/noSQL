@@ -92,5 +92,42 @@ namespace noSQL.Helpers
 
             return movies;
         }
+        public List<Movie> GetFilesByRaiting(string rating)
+        {
+            var url = "http://192.168.8.101:9200/movie/_search";
+            var jsonData = "{ " +
+                "\"query\":{" +
+                    "\"range\": {" +
+                        "\"Rating\": {" +
+                            "\"gte\": " + rating +
+                            "}" +
+                        "}" +
+                    "}" +
+                "}";
+            
+
+            using (var client = new WebClient())
+            {
+                client.Headers.Add("content-type", "application/json");
+                client.Credentials = new NetworkCredential("", "");
+                var jsonResponse = client.UploadString(url, jsonData);
+
+                List<Movie> movies = new List<Movie>();
+                var jsonResult = jsonResponse;
+
+                var parsedObject = JObject.Parse(jsonResult);
+                var tmp = parsedObject["hits"]["hits"];
+
+                foreach (var tmpMovie in tmp)
+                {
+                    string jsonMovie = tmpMovie["_source"].ToString();
+
+                    Movie movie = JsonConvert.DeserializeObject<Movie>(jsonMovie);
+                    movies.Add(movie);
+                }
+
+                return movies;
+            }
+        }
     }
 }
